@@ -25,6 +25,6 @@ docker build -t pdf-file-server .
 
 # Starte den neuen Container
 echo "Running the pdf-file-server container on port 8080..."
-docker run -d -p 8080:80 --name pdf-file-server pdf-file-server
-
+docker run -d -p 8080:80 --name pdf-file-server --mount type=bind,source=./logs,target=/var/log/nginx pdf-file-server
+docker run -d -v ./logs:/logs -v ./webalizer:/webalizer -e LOGPREFIX=access -e INTERVAL=3600 -e VERBOSE=0 toughiq/webalizer:latest
 echo "Process completed successfully."
